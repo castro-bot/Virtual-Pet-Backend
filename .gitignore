@@ -1,0 +1,5 @@
+envirtual/
+.env
+__pycache__/
+/backup-Virtual-Pet-Backend
+prueba.py
