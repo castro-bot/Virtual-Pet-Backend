@@ -4,20 +4,20 @@ from sqlalchemy.orm import sessionmaker
 from dotenv import load_dotenv
 import os
 
-# Cargar variables del archivo .env
+# Load variables from the .env file
 load_dotenv()
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 
 if not DATABASE_URL:
-    raise ValueError("DATABASE_URL no está definida en el archivo .env")
+    raise ValueError("DATABASE_URL is not defined in the .env file")
 
-# Configuración de SQLAlchemy
-engine = create_engine(DATABASE_URL)  # Motor para conectar a la base de datos
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine) # Permite que FastAPI hable con la base de datos, creando sesiones.
-Base = declarative_base()  # Base para definir los modelos de las tablas
+# SQLAlchemy configuration
+engine = create_engine(DATABASE_URL)  # Engine to connect to the database
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine) # Allows FastAPI to talk to the database by creating sessions.
+Base = declarative_base()  # Base for defining table models
 
-# Dependencia para obtener la sesión de base de datos
+# Dependency to get the database session
 def get_db():
     db = SessionLocal()
     try:

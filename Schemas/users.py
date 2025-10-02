@@ -11,7 +11,7 @@ class UserResponse(BaseModel):
     email: EmailStr
 
     class Config:
-        orm_mode = True  # Permite convertir objetos ORM a modelos Pydantic
+        orm_mode = True  # Allows converting ORM objects to Pydantic models
 
 class LoginRequest(BaseModel):
     email: str

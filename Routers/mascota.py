@@ -12,15 +12,15 @@ router = APIRouter(
 
 @router.post("/{user_id}", response_model=MascotaResponse)
 def create_mascota(user_id: int, mascota: MascotaCreate, db: Session = Depends(get_db)):
-    # Verificar si el usuario existe
+    # Verify if the user exists
     user = db.query(User).filter(User.id == user_id).first()
     if not user:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="El usuario no existe o el ID es incorrecto"
+            detail="The user does not exist or the ID is incorrect"
         )
 
-    # Verificar si ya existe una mascota con el mismo nombre para este usuario
+    # Verify if a pet with the same name already exists for this user
     existing_mascota = db.query(Mascota).filter(
         Mascota.user_id == user_id, Mascota.nombre == mascota.nombre
     ).first()
@@ -28,10 +28,10 @@ def create_mascota(user_id: int, mascota: MascotaCreate, db: Session = Depends(g
     if existing_mascota:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail=f"El usuario ya tiene una mascota llamada '{mascota.nombre}'. Usa otro nombre."
+            detail=f"The user already has a pet named '{mascota.nombre}'. Use another name."
         )
 
-    # Crear la nueva mascota
+    # Create the new pet
     db_mascota = Mascota(
         nombre=mascota.nombre,
         hambre=mascota.hambre,

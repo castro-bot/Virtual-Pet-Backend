@@ -10,25 +10,25 @@ from passlib.context import CryptContext
 
 router = APIRouter(
     prefix="/users",
-    tags=["users"]  # Esto agrupa los endpoints bajo la categoría "users" en Swagger
+    tags=["users"]  # This groups the endpoints under the "users" category in Swagger
 )
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")  # Contexto para manejar hashing de contraseñas
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")  # Context for handling password hashing
 
 @router.post("/", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
 def create_user(user: UserCreate, db: Session = Depends(get_db)):
-    # Verificar si el email ya está registrado
+    # Verify if the email is already registered
     existing_user = db.query(User).filter(User.email == user.email).first()
     if existing_user:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="El email ya está registrado"
+            detail="The email is already registered"
         )
 
-    # Hashear la contraseña
+    # Hash the password
     hashed_password = pwd_context.hash(user.psw)
 
-    # Crear un nuevo usuario
+    # Create a new user
     new_user = User(name=user.name, email=user.email, psw=hashed_password)
     db.add(new_user)
     db.commit()
@@ -41,12 +41,12 @@ def list_users(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
 
 @router.post("/login")
 def login_user(login: LoginRequest, db: Session = Depends(get_db)):
-    # Buscar al usuario por email
+    # Find the user by email
     user = db.query(User).filter(User.email == login.email).first()
     if not user:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Credenciales incorrectas"
+            detail="Incorrect credentials"
         )
 
     # Verificar la contraseña
