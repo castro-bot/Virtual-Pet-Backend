@@ -1,6 +1,6 @@
 # Virtual Pet API
 
-This project is a FastAPI backend for a virtual pet mobile application written in kotlin. It provides a set of APIs to manage users and their virtual pets, including functionalities for creating users, logging in, and managing pets' attributes like hunger and happiness. The application uses a PostgreSQL database for data persistence and SQLAlchemy for ORM.
+This project is a FastAPI backend for a virtual pet mobile application written in Kotlin. It provides a set of APIs to manage users and their virtual pets, including functionalities for creating users, logging in, and managing pets' attributes like hunger and happiness. The application uses a PostgreSQL database for data persistence and SQLAlchemy for ORM.
 
 ## Project Structure
 
@@ -98,3 +98,4 @@ If you need to expose your local server to the internet, you can use `ngrok`.
    ```
 
 This will provide you with a public URL that forwards to your local server, which is useful for testing webhooks or sharing your development server with others.
+
